@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">GraphTestTask</string>
+    <string name="greeting">Добро пожаловать! Это приложение позволяет запросить от 0 до 1000 точек с сервера и отобразить их в виде таблицы и графика. Пожалуйста, введите желаемое количество точек и нажмите «Поехали».</string>
+    <string name="points_quantity">Количество точек</string>
+    <string name="lets_go">Поехали</string>
+    <string name="please_enter_number">Пожалуйста введите число!</string>
+    <string name="please_enter_valid_number">Пожалуйста введите число от 1 до 1000</string>
 </resources>
