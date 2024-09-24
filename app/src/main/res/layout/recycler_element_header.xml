@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:orientation="horizontal">
+
+    <View
+        android:layout_width="64dp"
+        android:layout_height="match_parent"
+        android:background="@color/material_dynamic_secondary90" />
+
+    <TextView
+        android:id="@+id/col1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/table_bg"
+        android:gravity="center"
+        android:text="@string/x_header" />
+
+    <TextView
+        android:id="@+id/col2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/table_bg"
+        android:gravity="center"
+        android:text="@string/y_header" />
+</LinearLayout>

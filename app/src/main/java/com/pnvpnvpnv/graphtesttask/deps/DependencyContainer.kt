@@ -5,6 +5,7 @@ import com.pnvpnvpnv.graphtesttask.deps.Constants.BASE_URL
 import com.pnvpnvpnv.graphtesttask.network.PointsApi
 import com.pnvpnvpnv.graphtesttask.network.PointsRepository
 import com.pnvpnvpnv.graphtesttask.network.internal_stuff.PointsRepositoryImpl
+import com.pnvpnvpnv.graphtesttask.screens.graph.GraphScreenViewModelFactory
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -23,11 +24,10 @@ object DependencyContainer {
             .build()
     }
     private val pointsApi by lazy { retrofit.create(PointsApi::class.java) }
-    private val repository: PointsRepository by lazy {
+    private val pointsRepository: PointsRepository by lazy {
         PointsRepositoryImpl(pointsApi)
     }
 
     // external deps
-    fun getPointsRepository() = repository
-//    fun getGraphScreenViewModelFactory() =
+    fun getGraphScreenViewModelFactory() = GraphScreenViewModelFactory(pointsRepository)
 }

@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -52,6 +53,8 @@ dependencies {
     // coroutines
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.androidx.lifecycle.vm)
+    implementation(libs.androidx.lifecycle.runtime)
     // testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

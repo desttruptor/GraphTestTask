@@ -5,4 +5,10 @@
     <string name="lets_go">Поехали</string>
     <string name="please_enter_number">Пожалуйста введите число!</string>
     <string name="please_enter_valid_number">Пожалуйста введите число от 1 до 1000</string>
+    <string name="save_graph_to_gallery">Сохранить график в галерее</string>
+    <string name="x_header">X</string>
+    <string name="y_header">Y</string>
+    <string name="network_error">При загрузке произошла ошибка</string>
+    <string name="graph_saved">График сохранен в Галерею</string>
+    <string name="graph_saving_error">Ошибка при сохранении графика</string>
 </resources>
