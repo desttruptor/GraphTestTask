@@ -34,3 +34,6 @@ This is an Android application written in Kotlin that requests point coordinates
 3. **Sync Gradle dependencies.**
 
 4. **Run the application** on a device or emulator with Android API level 21 or higher.
+
+# Video demo:
+[Demo](https://youtu.be/xI5W1AdebEI?si=Dzy4ogG6kdb5Y2Q8)
