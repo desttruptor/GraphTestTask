@@ -33,12 +33,15 @@ class GraphScreenFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentGraphBinding.inflate(layoutInflater, container, false)
-        val vmFactory = DependencyContainer.getGraphScreenViewModelFactory()
-        _viewModel = ViewModelProvider(this, vmFactory)[GraphScreenViewModel::class.java]
         return _binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        // some sort of AssistedFactory from Hilt here
+        val argsCount = arguments?.getInt(Constants.POINTS_COUNT_KEY, 10) ?: 10
+        val vmFactory = DependencyContainer.getGraphScreenViewModelFactory(pointsCount = argsCount)
+        _viewModel = ViewModelProvider(this, vmFactory)[GraphScreenViewModel::class.java]
+
         withBinding {
             pointsTable.apply {
                 adapter = pointsTableAdapter
@@ -46,9 +49,8 @@ class GraphScreenFragment : Fragment() {
             }
             saveToFile.setOnClickListener { saveGraphToMediaStore() }
         }
+
         collectMVIFlows()
-        val argsCount = arguments?.getInt(Constants.POINTS_COUNT_KEY, 10) ?: 10
-        viewModel.loadPoints(argsCount)
     }
 
     override fun onDestroyView() {
@@ -75,6 +77,11 @@ class GraphScreenFragment : Fragment() {
 
     private fun observeEffect(graphScreenEffect: GraphScreenEffect) = when (graphScreenEffect) {
         GraphScreenEffect.ShowError -> showMessage(getString(R.string.network_error))
+        GraphScreenEffect.NetworkError -> showMessageWithRetry(
+            getString(R.string.network_error),
+            viewModel::loadPoints
+        )
+
         is GraphScreenEffect.ShowLoading -> showLoading(graphScreenEffect.show)
     }
 
@@ -85,6 +92,12 @@ class GraphScreenFragment : Fragment() {
 
     private fun showMessage(message: String) = withBinding {
         Snackbar.make(this.root, message, Snackbar.LENGTH_LONG).show()
+    }
+
+    private fun showMessageWithRetry(message: String, retry: () -> Unit) = withBinding {
+        Snackbar.make(this.root, message, Snackbar.LENGTH_LONG)
+            .setAction(getString(R.string.once_again)) { retry() }
+            .show()
     }
 
     private fun showLoading(show: Boolean) = withBinding {

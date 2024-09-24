@@ -11,9 +11,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 
 class GraphScreenViewModel(
-    private val pointsRepository: PointsRepository
+    private val pointsRepository: PointsRepository,
+    private val pointsCount: Int,
 ) : ViewModel() {
 
     val state: StateFlow<GraphScreenState> get() = _state
@@ -25,11 +27,20 @@ class GraphScreenViewModel(
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
 
-    fun loadPoints(count: Int) {
+    init {
+        loadPoints()
+    }
+
+    fun loadPoints() {
         viewModelScope.launch {
             _effect.send(GraphScreenEffect.ShowLoading(true))
-            runCatching { pointsRepository.getPoints(count) }
-                .onFailure { _effect.send(GraphScreenEffect.ShowError) }
+            runCatching { pointsRepository.getPoints(pointsCount) }
+                .onFailure {
+                    when (it) {
+                        is HttpException -> _effect.send(GraphScreenEffect.NetworkError)
+                        else -> _effect.send(GraphScreenEffect.ShowError)
+                    }
+                }
                 .onSuccess { resp ->
                     _state.update { prevState ->
                         prevState.copy(

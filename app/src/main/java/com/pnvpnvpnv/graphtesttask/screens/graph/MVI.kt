@@ -10,5 +10,6 @@ data class GraphScreenState(
 
 sealed interface GraphScreenEffect {
     data object ShowError : GraphScreenEffect
+    data object NetworkError : GraphScreenEffect
     data class ShowLoading(val show: Boolean) : GraphScreenEffect
 }

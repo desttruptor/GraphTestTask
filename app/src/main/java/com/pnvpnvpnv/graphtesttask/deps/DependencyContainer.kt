@@ -29,5 +29,6 @@ object DependencyContainer {
     }
 
     // external deps
-    fun getGraphScreenViewModelFactory() = GraphScreenViewModelFactory(pointsRepository)
+    fun getGraphScreenViewModelFactory(pointsCount: Int) =
+        GraphScreenViewModelFactory(pointsRepository, pointsCount)
 }
